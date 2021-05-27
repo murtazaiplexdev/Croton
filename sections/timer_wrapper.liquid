@@ -1,0 +1,107 @@
+<div class="timmer-wrapper">
+      <div class="conts">
+        <div id="demo"> </div>
+            <h6>{{ section.settings.content_html }}</h6>
+            {% if section.settings.btn_text != blank %}
+                 <a href="{{ section.settings.btn_url }}">{{ section.settings.btn_text }}</a>
+            {% endif %}
+      </div>
+    </div>
+
+<style>
+    .timmer-wrapper::after {
+        content: '';
+        background-image: url('{{ section.settings.left_img | img_url : 'master' }}');
+        background-position: center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 144px;
+        height: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+
+    }
+    .timmer-wrapper::before {
+        content: '';  
+        background-image: url('{{ section.settings.right_img | img_url : 'master' }}');
+        background-position: center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 130px;
+        height: 100px;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+</style>
+
+    <script>
+// Set the date we're counting down to
+var countDownDate = new Date("Dec 01, 2020 00:00:00").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("demo").innerHTML= '<span>'+ days + '<span>'+ "DAY " +'</span>' + '</span>' + '<span>'+ hours + '<span>'+ "HR " +'</span>' + '</span>' + '<span>'+ minutes + '<span>'+ "MIN " +'</span>' + '</span>'
+  + '<span>'+ seconds + '<span>'+ "SEC " +'</span>' + '</span>';
+    
+  // If the count down is over, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
+</script>
+
+{% schema %}
+    {
+        "name": "Timer Wrapper Section",
+        "settings": [
+            {
+                "type": "header",
+                "content": "content",
+                "info": "-------------"
+            },
+            {
+                "type": "image_picker",
+                "id": "left_img",
+                "label": "Left Image"
+            },
+            {
+                "type": "image_picker",
+                "id": "right_img",
+                "label": "Right Image"
+            },
+            {
+                "type": "html",
+                "id": "content_html",
+                "label": "Content"
+            },
+            {
+                "type": "url",
+                "id": "btn_url",
+                "label": "Button Url"
+            },
+            {
+                "type": "text",
+                "id": "btn_text",
+                "label": "Button Text",
+                "default": "shop now!"
+            }
+        ]
+    }
+{% endschema %}

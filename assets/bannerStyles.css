@@ -1,0 +1,720 @@
+
+/* header css starts here */
+.header-nav-bottom{
+    display:block;
+    background-image: url(https://cdn.shopify.com/s/files/1/1241/3290/files/countdown_timer_-_sitewide_sale_3_1.jpg?v=1616516563);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    height:120px;
+    display: flex;
+    align-items: center;
+  }
+  #clockdiv {
+    display: flex;
+    align-items: center;
+    border: 1px solid #fff;
+    border-radius: 6px;
+    padding: 5px 22px;
+  }
+  #clockdiv div{
+    margin-right:30px;
+  }
+  #clockdiv div:nth-last-child(1){
+    margin-right:0;
+  }
+  #clockdiv div span{
+    font-family: 'Proxima Nova Rg';
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+    color: #FFFFFF;
+    text-align: center;
+  }
+  #clockdiv div .smalltext{
+    font-family: 'Proxima Nova Alt Lt';
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+    margin-right:0;
+  }
+  .header-bottom-nav{
+    display:flex;
+    align-items: center;
+    width:100%;
+  }
+  .header-timer{
+    width:25%;
+    display: flex;
+    justify-content: flex-end;
+    text-align: center;
+  }
+  .header-text{
+    flex:1;
+    margin-left:40px;
+  }
+  .header-text p{
+    font-family:'Proxima Nova Rg';
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 1.2;
+    color: #FFFFFF;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    margin-bottom: 0px;
+  }
+  .header-text p strong{
+    font-family:'Proxima Nova Bl';
+    font-weight: 900;
+  }
+  .header-text p b{
+    font-weight:800;
+  }
+  .headernav-link{
+    width:25%;
+    text-align:right;
+  }
+  .headernav-link img{
+    width:206px;
+  }
+  #block-1597852616685-0 .banner-mobile{
+    display: none;
+  }
+
+/* Countdown CSS Ends */
+/* Navbar Banner Styles Start */
+.header-bottom-bar {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    height: 67px;
+    overflow: hidden;
+}
+.header-bottom-bar .header-bar-left {
+    flex: 1;
+    /* padding-left: 140px; */
+     padding-left: 0px;
+    color: #424242;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 800;
+    font-family: "Proxima Nova Bl";
+    line-height: 1.2;
+    text-align: center;
+}
+.header-bottom-bar .header-bar-right {
+    margin-left: auto;
+    background-color: #55845C;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    text-transform: uppercase;
+    padding: 0px 30px;
+    position: relative;
+    background: url(https://cdn.shopify.com/s/files/1/1241/3290/files/banner-image_5_c9e81d7d-2bab-44a4-97a9-c3a7d37a19f4.png?v=1603913400);
+    background-size: cover;
+}
+.header-bottom-bar .header-bar-right span {
+    font-family: 'Proxima Nova Bl';
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    display: inline-block;
+    padding-left: 0px;
+    padding-right: 15px;
+    letter-spacing: 1px;
+    line-height: 1.22;
+    padding-top: 3px;
+    /* text-shadow: 0px 0px 20px rgb(0 0 0 / 60%); */
+}
+/* Navbar Banner Styles Ends */
+
+/* Simple Banner Styles Start */
+.single-banner--hoverborder {
+    position: relative;
+    overflow: hidden;
+}
+.single-banner--hoverborder .banner-link {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.single-banner--hoverborder img {
+    width:100%;
+    -webkit-transform:scale(1);
+    -ms-transform:scale(1);
+    transform:scale(1);
+    -webkit-transition:0.6s;
+    -o-transition:0.6s;
+    transition:0.6s
+}
+#shopify-section-1605113106b186eb3b .banner-mobile {
+    display: none;
+}
+.single-banner--hoverborder .banner-content--middle-white {
+    left: 50%;
+    text-transform: uppercase;
+    transform: translate(-50%, -50%);
+}
+.single-banner--hoverborder .banner-content {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    bottom: auto;
+}
+.single-banner--hoverborder .banner-content--middle-white {
+    align-content: flex-start !important;
+}
+#block-1597852616685-1 .banner-content.banner-content--black-left p{
+    display: none;
+}
+.banner-content .home-full-width-banner {
+    padding-left: 7%;
+    width: 100%;
+}
+.banner-content .home-full-width-banner h6.bg_class, .collection_banner .ladies-ballroom h6 {
+    display: inline-block;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+    font-family: 'SF UI Display';
+    font-weight: 900;
+    font-size: 22px;
+    line-height: 26px;
+    padding: 9px 18px;
+    letter-spacing: 0.02em;
+    background-color:#2D9CDB;
+    margin-bottom: 0;
+}
+.single-banner .banner-content .christmas-text h3, .collection_banner .ladies-ballroom h3 {
+    font-family:"antarctican-headline";
+    font-weight: 800;
+    font-size: 60px;
+    line-height: 50px;
+    text-transform: uppercase;
+    color: #fff;
+    margin-top: 0px;
+    margin-bottom: 0;
+}
+
+.single-banner .banner-content .christmas-text h2, .collection_banner .ladies-ballroom h2 {
+    font-family:"smoothy";
+    font-weight: 400;
+    font-size: 80px;
+    line-height: 80px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+}
+.single-banner .banner-content .christmas-text h4, .collection_banner .ladies-ballroom h4 {
+    font-family:"neue-haas-grotesk-display";
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 43px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    text-shadow: 5px 10px 10px rgba(0, 0, 0, 0.4);
+    border: unset;
+    padding: unset;
+    margin-bottom: 8px;
+}
+.single-banner .banner-content .christmas-text img, .collection_banner .ladies-ballroom img {
+    width: 436px;
+    height: 243px;
+    display: block;
+    margin-left: -23px;
+}
+.different-style .banner-content .home-full-width-banner img {
+    display: none;
+}
+.single-banner .banner-content .christmas-text p, .collection_banner .ladies-ballroom p {
+    font-family:"proxima-nova";
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 30px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+}
+.single-banner .banner-content .christmas-text p strong, .collection_banner .ladies-ballroom p strong {
+    font-family:"proxima-nova";
+    font-weight: 800;
+}
+.collection_banner .deep-collection h6{
+    background-color: #2D9CDB;
+}
+.collection_banner .deep-collection h2{
+    font-family:"antarctican-headline";
+    font-weight: 800;
+    font-size: 70px;
+    line-height: 91px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    text-shadow: unset;
+    margin-bottom: unset;
+    letter-spacing: unset;
+}
+.collection_banner .deep-collection p{
+    font-family: 'Proxima Nova Rg';
+    font-weight: normal;
+    line-height: 32px;
+}
+.collection_banner .deep-collection p strong{
+    font-family:"proxima-nova";
+    font-weight: 800;
+}
+.single-banner .banner-content .christmas-text a {
+    display: inline-block;
+    font-family: "Proxima Nova Bl";
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: 0.2em;
+    text-align: center;
+    text-transform: uppercase;
+    background: transparent;
+    color: #FFFFFF;
+    border-radius: 0px;
+    padding: 15px 19px;
+    border: 2px solid #FFFFFF;
+    max-width: 184px;
+}
+/* Collection Banner */
+.collection_banner {
+    position: relative;
+}
+.collection-banner-content {
+    position: absolute;
+    top: 42%;
+    left: 4vw;
+    transform: translateY(-50%);
+}
+.shop-page-content .collection_banner img {
+    width: 100%;
+    height: auto;
+    object-position: unset;
+    object-fit: cover;
+}
+.mobile-banner {
+    display: none !important;
+}
+/* Collection Banner */
+/* Simple Banner Styles Ends */
+.collection_banner .collection-bliss h3 {
+    text-transform: uppercase;
+    color: #FB649D;
+    font-family:"proxima-nova";
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 1.2;
+    letter-spacing: 0.1em;
+    text-shadow: unset;
+    margin-top: unset;
+}
+.collection_banner .collection-bliss .banner-img-wrapper {
+    width: 434px;
+    height: 178px;
+}
+.collection_banner .collection-bliss p {
+    font-family: "proxima-nova";
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1.2;
+    color: #F32D89;
+    max-width: 712px;
+    text-transform: uppercase;
+    text-shadow: unset;
+}
+.collection_banner .collection-bliss p strong{
+    font-family:"proxima-nova";
+    font-weight: 800;
+}
+/* Responsive Styles Starts*/
+.header-bottom-bar .header-bar-right1{
+    width: 435px;
+    height: 100%;
+}
+.header-bottom-bar .header-bar-right1 img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+@media(max-width:1600px) {
+    .template-collection .collection-page-container {
+        margin-top: -30px;
+    }
+    .header-bottom-bar .header-bar-left{
+        font-size: 17px;
+    }
+    .header-bottom-bar .header-bar-right span {
+        font-size: 17px;
+    }
+}
+@media screen and (max-width: 1366px) {
+    .banner-content .home-full-width-banner h6.bg_class, .collection_banner .ladies-ballroom h6{
+        font-size: 18px;
+        line-height: 24px;
+        padding: 8px 25px;
+    }
+    .single-banner .banner-content .christmas-text h2, .collection_banner .ladies-ballroom h2 {
+        font-size: 70px;
+        line-height: 70px;
+    }
+    .single-banner .banner-content .christmas-text p, .collection_banner .ladies-ballroom p {
+        font-size: 16px;
+        line-height: 28px;
+    }
+    .single-banner .banner-content .christmas-text a {
+        font-size: 17px;
+    }
+    .collection_banner .deep-collection h2{
+        font-size: 60px;
+        line-height: 70px;
+    }
+    .collection_banner .collection-bliss .banner-img-wrapper {
+        width: 320px;
+        height: 130px;
+    }
+    .header-bottom-bar .header-bar-left{
+        font-size: 18px;
+    }
+    .header-bottom-bar .header-bar-right1 {
+        width: 350px;
+    }
+    .header-bottom-bar .header-bar-right1 img {
+        object-fit: unset;
+    }
+    .template-collection .collection-page-container {
+        margin-top: -30px;
+    }
+    .header-bottom-bar .header-bar-right span {
+        font-size: 15px;
+    }
+}
+@media(max-width:1200px) {
+    .header-bottom-bar {
+        height: 50px;
+    }
+    .header-bottom-bar .header-bar-left {
+        font-size: 14px;
+    }
+    .header-bottom-bar .header-bar-right span {
+        font-size: 14px;
+    }
+    .single-banner .banner-content .christmas-text h3, .collection_banner .ladies-ballroom h3 {
+        font-size: 50px;
+        line-height: 50px;
+    }
+    .single-banner .banner-content .christmas-text h2, .collection_banner .ladies-ballroom h2 {
+        font-size: 60px;
+        line-height: 60px;
+    }
+    .single-banner .banner-content .christmas-text h4, .collection_banner .ladies-ballroom h4{
+        font-size: 26px;
+        line-height: 30px;
+    }
+    .single-banner .banner-content .christmas-text p, .collection_banner .ladies-ballroom p {
+        font-size: 13px;
+        line-height: 24px;
+    }
+    .single-banner .banner-content .christmas-text a {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+    .template-collection .collection-page-container{
+        margin-top: -50px;
+    }
+    .collection_banner .deep-collection h2{
+        font-size: 45px;
+        line-height: 60px;
+    }
+    .collection_banner .collection-bliss .banner-img-wrapper {
+        width: 250px;
+        height: 100px;
+    }
+    .header-bottom-bar .header-bar-right1 {
+        width: 320px;
+    }
+    .header-bottom-bar .header-bar-right1 img {
+        object-fit: cover;
+    }
+}
+@media(max-width:991px) {
+    .single-banner .banner-content .christmas-text h2, .collection_banner .ladies-ballroom h2 {
+        font-size: 45px;
+        line-height: 45px;
+    }
+    .single-banner .banner-content .christmas-text h3, .collection_banner .ladies-ballroom h3 {
+        font-size: 35px;
+        line-height: 35px;
+    }
+    .single-banner .banner-content .christmas-text p, .collection_banner .ladies-ballroom p {
+        font-size: 12px;
+        line-height: 22px;
+        max-width: 45%;
+    }
+    .single-banner .banner-content .christmas-text p br, .collection_banner .ladies-ballroom p br{
+        display: none;
+    }
+    #shopify-section-1605113106b186eb3b .single-banner img{
+        height: 340px;
+        object-fit: cover;
+    }
+    .header-bottom-bar .header-bar-right1 {
+        width: 210px;
+    }
+    .header-bottom-bar .header-bar-right1 img {
+        object-fit: cover;
+        object-position: left;
+    }
+    .header-bottom-bar .header-bar-left {
+        font-size: 12px;
+    }
+    .header-bottom-bar .header-bar-right{
+        padding: 0 15px;
+    }
+    .header-bottom-bar .header-bar-right span {
+        font-size: 13px;
+        letter-spacing: 0;
+    }
+}
+@media(max-width:767px) {
+    .header-bottom-bar {
+        height: auto;
+        background-color: #ffffff;
+        display: block;
+        text-align: center;
+    }
+    .header-bottom-bar .header-bar-left {
+        display: block;
+        font-size: 14px;
+        width: 100%;
+    }
+    .header-bottom-bar .header-bar-right span {
+        display: block;
+        text-align: center;
+        width: 100%;
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+    .banner-content .home-full-width-banner {
+        padding-left: 0;
+    }
+    #shopify-section-1605113106b186eb3b .banner-desktop {
+        display: none;
+    }
+    #shopify-section-1605113106b186eb3b .banner-mobile {
+        display: block;
+        object-fit: cover;
+    }
+    .home-full-width-banner.christmas-text {
+        width: 100%;
+        text-align: center;
+        padding-left: 0;
+    }
+    .single-banner .banner-content .christmas-text h6, .collection_banner .ladies-ballroom h6{
+        font-size: 16px;
+        padding: 7px 14px;
+    }
+    .single-banner .banner-content .christmas-text h3, .collection_banner .ladies-ballroom h3 {
+        font-size: 60px;
+        line-height: 50px;
+    }
+    .single-banner .banner-content .christmas-text h2, .collection_banner .ladies-ballroom h2 {
+        font-size: 45px;
+        line-height: 45px;
+        margin-bottom: 1px;
+    }
+    .single-banner .banner-content .christmas-text h4, .collection_banner .ladies-ballroom h4 {
+        font-size: 19px;
+        line-height: 22px;
+    }
+    .single-banner .banner-content .christmas-text p, .collection_banner .ladies-ballroom p {
+        font-size: 16px;
+        max-width: 85%;
+        line-height: 25px;
+        color: #FFFFFF;
+        font-weight: 400;
+        margin: 0 auto;
+    }
+    .single-banner .banner-content .christmas-text p br, .collection_banner .ladies-ballroom p br{
+        display: none;
+    }
+    .single-banner .banner-content .christmas-text a, .collection_banner .ladies-ballroom a {
+        letter-spacing: 0.01em;
+    }
+    .single-banner .banner-content .christmas-text a {
+        padding: 13px 13px;
+        margin-top: 13px;
+        color: #FFFFFF;
+        border: 2px solid #FFFFFF;
+        letter-spacing: 3px;
+    }
+    .mobile-banner {
+        display: block !important;
+    }
+    .collection-banner-content {
+        left: 0;
+        text-align: center;
+        right: 0;
+        padding-left: 0%;
+    }
+    .header-bottom-bar .header-bar-left{
+        padding: 5px;
+    }
+    .collection_banner .deep-collection{
+        text-align: center;
+    }
+    .collection_banner .deep-collection h2{
+        font-size: 50px;
+        line-height: 58px;
+    }
+    .collection_banner .deep-collection p{
+        line-height: 22px;
+    }
+    .header-bottom-bar .header-bar-right1{
+        display: none;
+    }
+    .header-bottom-bar .header-bar-right{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    #block-62df990a-f3b1-4612-a929-4846bb3ff679 .single-banner--hoverborder .banner-content--middle-white{
+        z-index: 9;
+    }
+    .header-bottom-bar .header-bar-right{
+        background-size: inherit !important;
+    }
+}
+@media(max-width:575px) {
+    .single-banner--hoverborder img {
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+    }
+    #shopify-section-collection-template .ladies-ballroom h6 {
+        margin-top: 10px;
+    }
+    /* .single-banner .banner-content .christmas-text h3, .collection_banner .ladies-ballroom h3 {
+        font-size: 20px;
+    } */
+    .single-banner .banner-content .christmas-text a, .collection_banner .ladies-ballroom a {
+        letter-spacing: 3px;
+    }
+    .collection-banner-content{
+        top: 50%;
+    }
+    .collection_banner .deep-collection h2{
+        font-size: 44px;
+    }
+    .collection_banner .deep-collection p br{
+        display: none;
+    }
+    .shop-page-content .collection_banner .deep-image{
+        object-position: center center !important;
+    }
+    /* .single-banner .banner-content .christmas-text h2, .collection_banner .ladies-ballroom h2 {
+        font-size: 55px;
+        line-height: 73px;
+    } */
+}
+@media only screen and (max-width: 499px){
+    .header-bottom-bar .header-bar-right {
+        padding: 4px 17px;
+    }
+    .header-bottom-bar .header-bar-right span {
+        font-size: 12px;
+    }
+    .header-bottom-bar .header-bar-left {
+        font-size: 12px;
+    }
+    .collection_banner .collection-bliss .banner-img-wrapper img{
+        padding: 0;
+        margin-left: -10px;
+    }
+    .collection_banner .collection-bliss .banner-img-wrapper {
+        width: 150px;
+        height: 70px;
+    }
+    .collection_banner .collection-bliss p{
+        font-size: 14px;
+        max-width: 51%;
+        margin: unset;
+    }
+    .collection_banner .collection-bliss p br{
+        display: none;
+    }
+    .collection_banner .ladies-ballroom h3, .single-banner .banner-content .christmas-text h3 {
+        font-size: 45px;
+        line-height: 40px;
+    }
+    /* .single-banner .banner-content .christmas-text h2, .collection_banner .ladies-ballroom h2 {
+        font-size: 55px;
+        line-height: 55px;
+    } */
+    .single-banner .banner-content .christmas-text p, .collection_banner .ladies-ballroom p {
+        font-size: 13px;
+        line-height: 24px;
+        max-width: 83%;
+    }
+
+    .single-banner .banner-content .christmas-text a, .collection_banner .ladies-ballroom a {
+        letter-spacing: 3px;
+        font-size: 12px;
+        padding: 10px 8px;
+        margin-top: 10px;
+    }
+}
+@media(max-width: 410px){
+    .single-banner .banner-content .christmas-text p br{
+        display: none;
+      }
+      .collection_banner .ladies-ballroom p br{
+        display:none;
+    }
+    .collection_banner .deep-collection h2{
+        font-size: 30px;
+        line-height: 46px;
+        margin-bottom: 0;
+    }
+    .collection_banner .deep-collection p{
+        font-size: 12px;
+        line-height: 22px;
+    }
+    .single-banner .banner-content .christmas-text p, .collection_banner .ladies-ballroom p {
+        font-size: 13px;
+        max-width: 88%;
+    }
+}
+@media(max-width: 380px){
+    .single-banner .banner-content .christmas-text p, .collection_banner .ladies-ballroom p {
+        font-size: 14px;
+    }
+    .single-banner .banner-content .christmas-text h3, .collection_banner .ladies-ballroom h3 {
+        font-size: 17px;
+        line-height: 23px;
+    }
+    .collection_banner .deep-collection p br{
+        display: none
+    }
+    .collection_banner .deep-collection h6{
+        margin-bottom: 10px;
+    }
+    .collection_banner .collection-bliss p{
+        font-size: 12px;
+        max-width: 57%;
+        line-height: 20px;
+    }
+    .collection_banner .deep-collection p{
+        font-size: 11px;
+        line-height: 19px;
+        max-width: 90%;
+    }
+    .header-bottom-bar .header-bar-right span {
+        letter-spacing: 0;
+    }
+}
+/* Responsive Styles Ends*/

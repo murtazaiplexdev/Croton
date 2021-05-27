@@ -1,0 +1,47 @@
+
+{%- comment -%}
+    {% unless template.name == "index" %}
+        <script src="{{ 'plugins.js' | asset_url }}"></script>
+    {% endunless %}
+
+    {% if template.name == "index" %}
+        <script src="{{ 'jquery.min.js' | asset_url }}"></script>
+    {% endif %}
+{%- endcomment -%}
+
+
+<script src="{{ 'plugins.js' | asset_url }}"></script>
+
+
+{% if content_for_layout contains 'id="instafeed' or content_for_layout contains 'id="instafeed2' %}
+<script src="{{ 'jquery.instagramFeed.min.js' | asset_url }}"></script>
+{% endif %}
+
+{% if content_for_layout contains 'popup-video' %}
+<script src="{{ 'jquery.magnific.min.js' | asset_url }}"></script>
+{% endif %}
+
+{% if content_for_layout contains 'lezada-slick-slider' or content_for_layout contains 'shop-product__small-image-gallery-slider--vertical' or content_for_layout  contains 'slick-carousel-js' or content_for_layout contains 'related_product_slide' %} 
+<script src="{{ 'slick.min.js' | asset_url }}"></script>
+{% endif %} 
+
+{% if content_for_layout contains 'data-countdown' or content_for_layout contains 'data-countdown2' or content_for_layout contains 'data-countdown3' %}
+<script src="{{ 'jquery.countdown.min.js' | asset_url }}"></script>
+{% endif %}
+
+{% if template contains 'product' %}
+<script src="{{ 'jquery.zoom.min.js' | asset_url }}"></script>
+{% endif %}
+
+{% if content_for_layout contains 'id="product-content' %}
+<script src="{{ 'jquery.sticky-sidebar.js' | asset_url }}"></script>
+{% endif %}
+
+{% if content_for_layout contains 'tilter' %}
+<script src="{{ 'tilt.jquery.min.js' | asset_url }}"></script>
+{% endif %}
+
+{% if content_for_layout contains 'pick_delivery_date' %}
+<script src="{{ 'jquery-ui.min.js' | asset_url }}"></script>
+{% endif %}
+

@@ -1,0 +1,178 @@
+{% if section.settings.product_details %}
+
+<div class="product-details-wrap">
+    {% if section.settings.product_info_tab_enable %}
+        <div class="product-discription">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="product-details-title">{{ section.settings.product_info_title }}</h2>
+                        <div class="product_contents">
+                            {%- if product.description contains '[product_description]' -%}            
+                                {%- assign product_description_first = product.description | split:'[/product_description]' | first -%}
+                                {%- assign product_description_final = product_description_first | split:'[product_description]' | last -%} 
+                                    {{ product_description_final }}
+                                {%- else -%}
+                                    {{ product.description | split: '[short_description]' | first | split: '[product_description]' | first | split: '[new_products]' | first | split: '[product_video]' | first | split: '[affiliate_link]' | first | split: '[countdown]' | first | split: '[unique_description_1]' | first | split: '[unique_description_2]' | first | split: '[unique_description_3]' | first }}
+                            {%- endif -%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if section.settings.product_review_tab_enable %}
+        <div class="product-review">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="product-details-title">{{ section.settings.product_review_title }}</h2>
+                        <div class="product_contents">
+                            <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %} 
+
+    <div class="product-shipping">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    {% comment %} {% assign i = 1 %}
+                    {%- for block in section.blocks -%}
+                        {%- case block.type -%}
+                            {%- when 'custom_tab' -%}
+                            <div class="tab-pane" id="custom-tab-{{ i }}" role="tabpanel">
+                                {{ pages[block.settings.custom_tab_handle].content }}
+                            </div>
+                        {%- endcase -%}
+                        {% assign i = i | plus: 1 %}
+                    {%- endfor -%} {% endcomment %}
+                    <div class="product-shipping-wrap">
+                        <div class="inner-box">
+                            <div class="box-left">
+                                <div class="box-icon">
+                                    <img src="{{ 'Free Shipping.png' | asset_img_url: 'master' }}">
+                                </div>
+                            </div>
+                            <div class="box-right">
+                                <h4>Free Shipping and Shipping Fee Discount Eligibility</h4>
+                                <p>If your purchase is above the threshold, you will qualify for a delivery fee discount or free delivery.
+Shipping will be calculated during checkout.</p>
+                            </div>
+                        </div>
+                        <div class="inner-box">
+                            <div class="box-left">
+                                <div class="box-icon">
+                                    <img src="{{ 'return-box.png' | asset_img_url: 'master' }}">
+                                </div>
+                            </div>
+                            <div class="box-right">
+                                <h4>Returns Policy</h4>
+                                <p>We will accept returns up to 30 days from date of receiving watch. Watch should be unworn and in original packaging. There is a 30% restocking fee for returns plus the return shipping. The money will be refunded to the credit card/PayPal used to make the transaction.</p>
+                            </div>
+                        </div>
+                        <div class="inner-box">
+                            <div class="box-left">
+                                <div class="box-icon">
+                                    <img src="{{ 'guarantee.png' | asset_img_url: 'master' }}">
+                                </div>
+                            </div>
+                            <div class="box-right">
+                                <h4>Lifetime Warranty</h4>
+                                <p>The Croton Lifetime Warranty covers faulty workmanship with normal usage for the lifetime of the watch. In case of defects covered by the warranty, all parts (excluding battery, leather strap and buckle) will be repaired or the watch will be replaced free of charge. In the case of replacement, Croton cannot guarantee that the replacement will be the original watch model. If your model is not available, a watch of equal value and similar style will be supplied. A copy of the receipt and/or your completed Certificate of Warranty is required as proof of purchase.</p>
+                            </div>
+                        </div>
+                        <div class="inner-box">
+                            <div class="box-left">
+                                <div class="box-icon">
+                                    <img src="{{ 'gift-voucher.png' | asset_img_url: 'master' }}">
+                                </div>
+                            </div>
+                            <div class="box-right">
+                                <h4>Voucher Usage</h4>
+                                <p>You can apply a voucher code on the checkout page. Do note you can use only one voucher code per order.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endif %}
+
+
+
+
+{% schema %}
+  {
+    "name": "Product Information",
+    "settings": [
+		{
+            "type": "checkbox",
+            "id": "product_details",
+            "label": "Show Product Details Section",
+            "default": true
+        },		
+		{
+            "type": "header",
+            "content": "Product Description"
+        },
+		{
+            "type": "checkbox",
+            "id": "product_info_tab_enable",
+            "label": "Show Product Description",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "product_info_title",
+            "label": "Description Title",
+            "default": "Specifications"
+        },
+		{
+            "type": "header",
+            "content": "Review Tab"
+        },
+		{
+            "type": "checkbox",
+            "id": "product_review_tab_enable",
+            "label": "Show Product Review",
+            "info": "Install Free Apps for Product Review [Click Here](https:\/\/apps.shopify.com\/product-reviews)",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "product_review_title",
+            "label": "Title",
+            "default": "Reviews"
+        }
+	],
+	"blocks": [
+      {
+          "name": "Custom Tab",
+          "type": "custom_tab",
+          "settings": [
+              {
+                "type": "text",
+                "id": "custom_tab_title",
+                "label": "Tab Title",
+                "default": "Tab Title"
+              },
+              {
+                "type": "page",
+                "id": "custom_tab_handle",
+                "label": "Select Page for information",
+                "info": "[Create a page](\/admin\/pages\/new)"
+              }		
+          ]
+      }
+  	]
+  }
+{% endschema %}

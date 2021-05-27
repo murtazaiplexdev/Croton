@@ -1,0 +1,93 @@
+
+<div class="home-video-section" style="background: {{ section.settings.bg_color }} url('{{ section.settings.bg_image | img_url: 'master' }}');">
+    
+
+    <!-- <video class="home-video-tag" playsinline autoplay loop muted src="{{ section.settings.video_url }}" type="video/mp4">
+    </video> -->
+    <div class="home-video-banner-content {% if section.settings.button_url == '/collections/christmas-2020' %}christmas-banner{% endif %}">
+        {% if section.settings.sub_title != blank %}
+            <h6>{{ section.settings.sub_title }}</h6>
+        {% endif %}
+        {% if section.settings.title != blank %}
+            <h1>{{ section.settings.title }}</h1>
+        {% endif %}
+        {% if section.settings.title2 != blank %}
+            <h3>{{ section.settings.title2 }}</h3>
+        {% endif %}
+        {% if section.settings.text != blank %}
+        <p>{{ section.settings.text }}</p>
+        {% endif %}
+        {% if section.settings.button_text != blank %}
+        <a href="{{ section.settings.button_url }}" class="custom-btn">{{ section.settings.button_text }}</a>
+        {% endif %}
+  </div>
+
+
+</div>
+
+
+{% schema %}
+{
+    "name": "Home Video Banner",
+    "settings": [
+         {
+             "type": "text",
+             "id": "video_url",
+             "label": "label",
+             "default": "https://cdn.shopify.com/s/files/1/1241/3290/files/Croton_splash1.mp4?v=1600958385",
+             "info": "Upload Video form admin file and put the url, Format should be mp4"
+         },
+         {
+             "type": "image_picker",
+             "id": "bg_image",
+             "label": "Thumbnail Image"
+         },
+         {
+             "type": "color",
+             "id": "bg_color",
+             "label": "Video Background Color",
+             "default": "#333333"
+         },
+         {
+             "type": "text",
+             "id": "sub_title",
+             "label": "Sub Title",
+             "default": "DISCOVER CROTON"
+         },
+         {
+            "type": "text",
+            "id": "title2",
+            "label": "Title2"
+        },
+         {
+             "type": "text",
+             "id": "title",
+             "label": "Title",
+             "default": "Fine Watches <br> Since 1878"
+         },
+         {
+             "type": "textarea",
+             "id": "text",
+             "label": "Text",
+             "default": "A style for every occasion"
+         },
+         {
+            "type": "text",
+            "id": "button_text",
+            "label": "Button Text",
+            "default": "Shop Now"
+        },
+         {
+             "type": "url",
+             "id": "button_url",
+             "label": "Button URL"
+         }
+    ],
+    "presets": [
+        {
+            "category": "Home Video Banner",
+            "name":"Home Video Banner"
+        }
+    ]
+}
+{% endschema %}

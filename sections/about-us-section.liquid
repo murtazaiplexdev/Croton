@@ -1,0 +1,124 @@
+<div class="custom-page">
+    <div class="custom-page-container">
+        <div class="custom-header-section">
+            <h6>{{ section.settings.main_sub_title }}</h6>
+            <h1>{{ section.settings.main_title }}</h1>
+            <p><strong>{{ section.settings.main_second_sub_title }}</strong></p>
+            <p>{{ section.settings.main_text }}</p>
+        </div>
+        <div class="custom-page-top-banner">
+            {% comment %} <img src="{{ section.settings.page_banner | img_url: 'master' }}" alt=""> {% endcomment %}
+            <iframe src="{{ section.settings.page_video }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="about-us-content-row">
+            {% for block in section.blocks %}
+                {% unless block.settings.img_right %}
+                    <div class="content-wrap img-left">
+                        <div class="img-wrap">
+                            <div class="inner-wrap">
+                                <img src="{{ block.settings.banner | img_url: 'master' }}" alt="">
+                            </div>
+                        </div>
+                        <div class="description-wrap">
+                            <div class="inner-wrap">
+                                <h5>{{ block.settings.sub_title }}</h5>
+                                <h2>{{ block.settings.title }}</h2>
+                                <p>{{ block.settings.text }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endunless %}
+
+                {% if block.settings.img_right %}
+                    <div class="content-wrap img-right">
+                        <div class="description-wrap">
+                            <div class="inner-wrap">
+                                <h5>{{ block.settings.sub_title }}</h5>
+                                <h2>{{ block.settings.title }}</h2>
+                                <p>{{ block.settings.text }}</p>
+                            </div>
+                        </div>
+                        <div class="img-wrap">
+                            <div class="inner-wrap">
+                                <img src="{{ block.settings.banner | img_url: 'master' }}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "About Us Page",
+        "settings": [
+            {
+                "type": "text",
+                "id": "main_sub_title",
+                "label": "Page Sub Title",
+                "default": "ABOUT"
+            },
+            {
+                "type": "text",
+                "id": "main_title",
+                "label": "Page Title",
+                "default": "Croton Watches"
+            },
+            {
+                "type": "text",
+                "id": "main_second_sub_title",
+                "label": "Page second Sub Title",
+                "default": "An ever-evolving brand which has remained loyal to its origins"
+            },
+            {
+                "type": "textarea",
+                "id": "main_text",
+                "label": "Page Text",
+                "default": "Since their creation, Croton Watches has been known to be representative of the distinctive craftsmanship of Swiss watchmakers, and the expansive creativity of Italian style. Within the Italian landscape lies a city, historically known for the intelligence, strength and physical beauty of its inhabitants; CROTON."
+            },
+            {
+                "type": "text",
+                "id": "page_video",
+                "label": "Video URL",
+                "default": "https://www.youtube.com/embed/q7_Q6AOZO94"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "about_row",
+                "name": "About Content Row",
+                "settings": [
+                    {
+                        "type": "checkbox",
+                        "id": "img_right",
+                        "label": "Image Right",
+                        "default": false
+                    },
+                    {
+                        "type": "text",
+                        "id": "sub_title",
+                        "label": "Sub Title"
+                    },
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Title"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "text",
+                        "label": "Text"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "banner",
+                        "label": "Image"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

@@ -1,0 +1,62 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-4">
+                <img src="" alt="an image" />
+            </div>
+            <div class="col-md-6 col-lg-6">
+                {% for block in section.blocks %}
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3">
+                            <img src="" alt="an image" /><h2><span>{{icon_text}}</h2></span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+    {
+        "name":"Product Features",
+        "settings":[
+            {
+                "type":"text",
+                "id":"title",
+                "label":"Title",
+                "default":"Title"
+            },
+            {
+                "type": "image_picker",
+                "id": "hero_",
+                "label": "Hero Image"
+            }
+        ],
+        "blocks":[
+            {
+                "type":"image",
+                "name":"Image",
+                "settings":[
+                        {
+                            "type": "image_picker",
+                            "id": "icon",
+                            "label": "Upload Icon"
+                        },
+                        {
+                        "type":"text",
+                        "id":"icon_text",
+                        "label":"Icon Text",
+                        "default":"Random Text"
+                        }
+                ]
+            }
+        ],
+        "presets":[
+            {
+                "name":"Product Features",
+                "category":"Custom"
+            }
+        ]
+    }
+{% endschema %}

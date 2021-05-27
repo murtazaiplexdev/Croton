@@ -1,0 +1,206 @@
+
+<div class="custom-footer">
+    <div class="container wide">
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
+                <div class="row footer-left">
+                    <div class="col-md-3 logo">
+                        <a href="https://www.crotonwatch.com/">
+                            <img src="https://cdn.shopify.com/s/files/1/1241/3290/files/Logo_1_300x300.png?v=1597854611">
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Croton Group</h3>
+                        <p>450 W Nyack Rd, West Nyack, NY 10994</p>
+                    </div>
+                    <div class="col-md-5 contacts-wrap">
+                        <div class="label">Phone: <a href="tel:+914-893-4111">914-893-4111</a></div>
+                        <div class="label">Toll Free: <a href="tel:+800-443-7639">800-443-7639</a></div>
+                        <div class="label">Fax: <a href="tel:+914-893-4222">914-893-4222</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 footer-right col-sm-12">
+                <div class="custom-row row">
+                    <div class="custom-footer-menu">
+                        {% for block in section.blocks %} 
+                            <nav>
+                                <ul>
+                                {% assign footer_menu = block.settings.footer_menu_handle %}
+                                {% for link in linklists[footer_menu].links %}
+                                <li><a href="{{ link.url }}"> {{ link.title }}</a></li>
+                                {% endfor %}
+                                </ul>
+                            </nav>
+                        {% endfor %}
+                    </div>
+                    <div class="custom-footer-social-links">
+                      {% for block in section.blocks %} 
+                        <nav>
+                            <ul>
+                            {% if block.settings.social_icon_1_name != blank %}
+                                <li>
+                                    <a href="{{ block.settings.social_icon_1_link }}">
+                                        <i class="fa fa-{{ block.settings.social_icon_1_name }}"></i>
+                                    </a>
+                                </li>        
+                            {% endif %}
+                            {% if block.settings.social_icon_2_name != blank %}
+                                <li>
+                                    <a  href="{{ block.settings.social_icon_2_link }}">
+                                        <i class="fa fa-{{ block.settings.social_icon_2_name }}"></i>
+                                    </a>
+                                </li>        
+                            {% endif %}   
+                            {% if block.settings.social_icon_3_name != blank %}
+                                <li>
+                                    <a  href="{{ block.settings.social_icon_3_link }}">
+                                        <i class="fa fa-{{ block.settings.social_icon_3_name }}"></i>
+                                    </a>
+                                </li>        
+                            {% endif %}
+                            {% if block.settings.social_icon_4_name != blank %}
+                                <li>
+                                    <a href="{{ block.settings.social_icon_4_link }}">
+                                        <i class="fa fa-{{ block.settings.social_icon_4_name }}"></i>
+                                    </a>
+                                </li>        
+                            {% endif %}
+                            
+                            {% if block.settings.social_icon_5_name != blank %}
+                                <li>
+                                    <a href="{{ block.settings.social_icon_5_link }}">
+                                        <i class="fa fa-{{ block.settings.social_icon_5_name }}"></i>
+                                    </a>
+                                </li>        
+                            {% endif %}
+                            </ul>
+                        </nav>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row copyrights-wrap">
+            <div class="col-md-12">
+                <hr>
+                <p>© 2019 Croton Watch Co Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+  {
+  "name": "Main Footer",
+    "settings": [
+              
+    ],
+	"blocks":[
+		{
+          "type": "social_icon",
+          "name": "Social Media",
+          "settings": [
+			  {
+                "type": "text",
+                "id": "footer_widget_title",
+                "label": "Footer Widget Title",
+                "default": "Widget TItle"
+              },
+			  {
+                "type": "header",
+                "content": "Icon With Link"
+              },
+			  {
+                "type": "text",
+                "id": "social_icon_1_name",
+                "label": "Social Icon Name",
+                "default": "twitter",
+                "info": "Fontawesome Icon [See Icon](https:\/\/fontawesome.com\/v4.7.0\/icons\/)"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_1_link",
+                "label": "Link"
+              },
+              {
+                "type": "header",
+                "content": "Icon With Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_2_name",
+                "label": "Social Icon Name",
+                "default": "instagram",
+                "info": "Fontawesome Icon [See Icon](https:\/\/fontawesome.com\/v4.7.0\/icons\/)"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_2_link",
+                "label": "Link"
+              },
+              {
+                "type": "header",
+                "content": "Icon With Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_3_name",
+                "label": "Social Icon Name",
+                "default": "google-plus",
+                "info": "Fontawesome Icon [See Icon](https:\/\/fontawesome.com\/v4.7.0\/icons\/)"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_3_link",
+                "label": "Link"
+              },
+              {
+                "type": "header",
+                "content": "Icon With Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_4_name",
+                "label": "Social Icon Name",
+                "default": "linkedin",
+                "info": "Fontawesome Icon [See Icon](https:\/\/fontawesome.com\/v4.7.0\/icons\/)"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_4_link",
+                "label": "Link"
+              },
+              {
+                "type": "header",
+                "content": "Icon With Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_5_name",
+                "label": "Social Icon Name",
+                "default": "pinterest",
+                "info": "Fontawesome Icon [See Icon](https:\/\/fontawesome.com\/v4.7.0\/icons\/)"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_5_link",
+                "label": "Link"
+              }
+          ]
+        },
+		{
+          "type": "widget_menu",
+          "name": "Footer Menu",
+          "settings": [
+			  {
+                  "type": "link_list",
+                  "id": "footer_menu_handle",
+                  "label": "Select Menu"
+              }
+          ]
+        }
+	   
+	]
+  }
+{% endschema %}

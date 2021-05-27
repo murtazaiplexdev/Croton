@@ -1,0 +1,595 @@
+<div class="shopping-cart-area mt-130 mb-130 custom-cart-wrap" id="section-{{ section.id }}">
+  <div class="container">
+    {%- if cart.item_count > 0 -%}
+    <form action="/cart" method="post" novalidate class="cart">
+      <div class="row">
+        <div class="col-lg-12 mb-30">
+          <div class="cart-table-container">
+            <table class="cart-table">
+              <thead>
+                <tr>
+                  <th class="pro-title product-name" colspan="2">{{ section.settings.table_product_title }}</th>
+                  <th class="pro-price product-price">{{ section.settings.table_price_title }}</th>
+                  <th class="pro-quantity product-quantity">{{ section.settings.table_quantity_title }}</th> 
+                  <th class="pro-subtotal product-subtotal">{{ section.settings.table_total_title }}</th>
+                  <th class="pro-remove product-remov">{{ section.settings.table_reomove_title }}</th>
+                </tr>
+              </thead>
+              
+              <tbody>
+                {% for item in cart.items %}
+                <tr>
+                  <td class="product-thumbnail pro-thumbnail">
+                    <div class="product-thumbnail-wrap">
+						<a href="{{ item.url }}"><img src="{{ item | img_url: 'compact' }}" alt="{{ item.title | escape }}" /></a>
+					<div>
+                  </td>
+                  <td class="product-name pro-name">
+                     <a href="{{ item.url }}">{{ item.product.title }}</a>
+                    {%- unless item.variant.title contains 'Default' -%}
+                    <span class="product-variation">{{ item.variant.title }}</span>
+                    {%- endunless -%}
+                    {% if section.settings.cart_vendor_enable %}
+                    <p>{{ item.vendor }}</p>
+                    {% endif %}
+                  </td>
+
+
+                   <td class="product-price pro-price"><span class="price amount">{{ item.price | money }}</span></td>
+                  
+                  <td class="product-quantity pro-quantity">
+                    <div class="pro-qty d-inline-block mx-0 product-quantity">
+                      <input type="text" value="{{ item.quantity }}" name="updates[]">
+                    </div>
+                  </td>
+                  
+                  
+                  <td class="total-price pro-subtotal"><span class="price">{{ item.line_price | money }}</span></td>
+
+                  <td class="product-remove pro-remove">
+                    <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0"><i class="ion-android-close"></i></a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-12 mb-80">
+          <div class="cart-coupon-area pb-30">
+            <div class="row align-items-center">
+              <div class="col-lg-12 text-left text-lg-right">
+                <input class="lezada-button lezada-button--medium" name="update" type="submit" value="{{ section.settings.update_button_title }}" />
+                <a class="lezada-button lezada-button--medium" href="/collections/all">{{ section.settings.continue_shopping_title }}</a>
+                <a class="lezada-button lezada-button--medium" href="/cart/clear">{{ section.settings.clear_cart_title }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-12 col-12">
+          <div class="cart-payment">
+            <div class="row">
+              <div class="col-lg-6">  
+                
+                {%- if section.settings.delivery_date_enable -%}
+                {% render 'delivery-date' %}
+                {%- endif -%}
+
+                {%- if section.settings.cart_feature == 'cart_note' -%}
+                <div class="cart-coupon">
+                  <h3>{{ section.settings.cart_note_title }}</h3>
+                  <textarea name="note" class="" id="CartSpecialInstructions">{{ cart.note }}</textarea>
+                </div>
+                {%- elsif section.settings.cart_feature == 'shipping_calculator' -%}
+                {%- include 'cart-shipping-calculator' -%}
+                
+                {%- else -%}
+
+                {%- endif -%}
+              </div>
+              <div class="col-lg-6">
+                <div class="cart-calculation-area">
+                  <h2 class="mb-40">{{ section.settings.cart_total_heading_title }}</h2>
+                  <table class="cart-calculation-table mb-30">
+                    <tbody>
+                      <tr class="cart-subtotal">
+                        <th>{{ section.settings.cart_subtotal_title }}</th>
+                        <td><span class="amount"><span id="bk-cart-subtotal-price">{{ cart.total_price | money }}</span></span></td>
+                      </tr>
+                      <tr class="order-total">
+                        <th>{{ section.settings.cart_total_title }}</th>
+                        <td>
+                          <strong><span class="amount"><span id="bk-cart-subtotal-price">{{ cart.total_price | money }}</span></span></strong>
+                        </td>
+                      </tr>											
+                    </tbody>
+                  </table>
+                  {%- if cart.total_discounts > 0 -%}
+                  {% assign savings = cart.total_discounts | money %}
+                  <p>
+                    <span class="cart-subtotal__savings"><em>{{ 'cart.general.savings_html' | t: price: savings }}</em></span>
+                  </p>
+                  {%- endif -%}
+                  
+                  <div class="cart-calculation-button {% if section.settings.check_term_condtion %} disabled{% endif %} text-center">
+                    {%- if section.settings.check_term_condtion -%}
+                    <input type="checkbox" id="cart_agree_to_check" value="1">
+                    <label for="cart_agree_to_check">{{ section.settings.agree_btn_text }}</label>
+                    {%- endif -%}
+
+                    <button type="submit" class="lezada-button lezada-button--medium checkout_btn" name="checkout">{{ section.settings.checkout_button_title }}</button>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    {%- else -%}
+    <div class="row">
+      <div class="col-lg-12 col-12">
+        <div class="empty-cart-page text-center">
+          <h4 class="empty_cart_title">{{ section.settings.shopping_cart_title }}</h4>
+          <div class="empty__cart_img">
+            <img src="{% if section.settings.empty_cart_img != blank %}{{ section.settings.empty_cart_img | img_url: 'master' }} {% else %}  https://cdn.shopify.com/s/files/1/0132/3116/1408/files/cart.png?13612 {% endif %}" alt="{{ section.settings.empty_cart_img.alt }}" >
+          </div>
+          <h5 class="mb-30">{{ section.settings.cart_empty_title }}</h5>
+          <p><a class="lezada-button lezada-button--small" href="/collections/all"><i class="fa fa-angle-left" aria-hidden="true"></i> {{ section.settings.cart_continue_title }}</a></p>
+        </div>
+      </div>
+    </div>
+    {%- endif -%}
+  </div>
+</div>
+<!-- PAGE SECTION END -->
+
+{%- include 'section_typography' -%}
+
+<style>
+  #section-{{ section.id }} .lezada-button.lezada-button--medium.checkout_btn {
+    background: {{ section.settings.checkbout_btn_color }};
+    border-color: {{ section.settings.checkbout_btn_color }};
+    color: {{ section.settings.checkout_button_text_color }}!important;
+  }
+</style>
+
+
+{% schema %}
+  {
+    "name": "Cart Page",
+    "settings": [
+		{
+			"type": "header",
+			"content": "Table Heading Title"
+		},
+		{
+			"type": "text",
+			"id": "table_image_title",
+			"label": "Image Heading Title",
+			"default": "Image"
+		},
+		{
+			"type": "text",
+			"id": "table_product_title",
+			"label": "Product Heading Title",
+			"default": "Product"
+		},
+		{
+			"type": "text",
+			"id": "table_price_title",
+			"label": "Price Heading Title",
+			"default": "Price"
+		},
+		{
+			"type": "text",
+			"id": "table_quantity_title",
+			"label": "Quantity Heading Title",
+			"default": "Quantity"
+		},
+		{
+			"type": "text",
+			"id": "table_total_title",
+			"label": "Total Heading Title",
+			"default": "Total"
+		},
+		{
+			"type": "text",
+			"id": "table_reomove_title",
+			"label": "Remove Heading Title",
+			"default": "Remove"
+		},
+		{
+			"type": "header",
+			"content": "Button Title"
+		},
+		{
+			"type": "text",
+			"id": "update_button_title",
+			"label": "Update Button Title",
+			"default": "Update Cart"
+		},
+		{
+			"type": "text",
+			"id": "continue_shopping_title",
+			"label": "Continue Shopping Button Title",
+			"default": "Continue Shopping"
+		},
+		{
+			"type": "text",
+			"id": "clear_cart_title",
+			"label": "Clear Cart Button Title",
+			"default": "Clear Cart"
+		},
+		{
+			"type": "checkbox",
+			"id": "cart_vendor_enable",
+			"label": "Show Product Vendor",
+			"default": false
+		},
+		{
+			"type": "header",
+			"content": "Pick A Delivery Date",
+			"info": "-------"
+		},
+		{
+			"type": "checkbox",
+			"id": "delivery_date_enable",
+			"label": "Pick Delivery Date & Time Enable ?",
+			"default": true
+		},
+		{
+			"type": "text",
+			"id": "pick_delivery_time_title",
+			"label": "Pick a delivery date title",
+			"default": "Pick a delivery date and Time"
+		},
+		{
+			"type": "paragraph",
+			"content": "Delivery Date"
+		},
+		{
+			"type": "checkbox",
+			"id": "pick_delivery_only_date",
+			"label": "Pick Delivery Date Enable ?",
+			"default": true
+		},
+		{
+			"type": "textarea",
+			"id": "selectweekDays",
+			"label": "Select WeekDays",
+			"default": "1, 2, 3, 4, 5",
+			"info": "Please follow the instructions. Put here 0-6 using comma(,) Example: 1,2,3,4,5 .The number you don't keep, that will be counted over the weekend.The following number of each day: 0-Sun, 1-Mon, 2-Tue, 3-Wed, 4-Thu, 5-Fri, 6-Sat"
+		},
+		{
+			"type": "paragraph",
+			"content": "Delivery Time"
+		},
+		{
+			"type": "checkbox",
+			"id": "pick_delivery_time",
+			"label": "Pick Delivery Time Enable ?",
+			"default": true
+		},
+		{
+			"type": "paragraph",
+			"content": "Special Note for the customers"
+		},
+		{
+			"type": "textarea",
+			"id": "special_note_for_the_customers",
+			"label": "You can add a note for the customers",
+			"default": " Pick delivery date and time as you choose. Delivery Time takes place between 12PM - 4PM MON-FRI AND 8AM-11AM SAT."
+		},
+		{
+			"type": "header",
+			"content": "Cart Note / Shipping Calculator",
+		    "info": "-------"
+		},
+		{
+            "type": "select",
+            "id": "cart_feature",
+            "label": "Show Any One",
+            "options": [
+                {
+                    "value": "shipping_calculator",
+                    "label": "Shipping Calculator"
+                },
+                {
+                    "value": "cart_note",
+                    "label": "Cart Note"
+                },
+				{
+                    "value": "none",
+                    "label": "None"
+                }
+            ],
+            "default": "shipping_calculator"
+        },
+		{
+			"type": "text",
+			"id": "shipping_calculator_heading",
+			"label": "Shipping Calculator Title",
+			"default": "Get shipping estimates"
+		},
+		{
+			"type": "text",
+			"id": "shipping_calculator_button_title",
+			"label": "Shipping Calculator Button Title",
+			"default": "Calculate shipping"
+		},
+		{
+			"type": "text",
+			"id": "cart_note_title",
+			"label": "Cart Note Title",
+			"default": "Special instructions for seller"
+		},
+		{
+			"type": "header",
+			"content": "Cart Totals"
+		},
+		{
+			"type": "text",
+			"id": "cart_total_heading_title",
+			"label": "Cart Total Heading Title",
+			"default": "Cart Totals"
+		},
+		{
+			"type": "text",
+			"id": "cart_subtotal_title",
+			"label": "Cart Subtotal Title",
+			"default": "Subtotal"
+		},
+		{
+			"type": "text",
+			"id": "cart_total_title",
+			"label": "Cart Total Title",
+			"default": "Total"
+		},
+		{
+			"type": "header",
+			"content": "Checkout Button"
+		},
+		{
+          "type": "checkbox",
+          "id": "check_term_condtion",
+          "label": "Terms & Condition Button Enable",
+          "default": true
+      	},
+	   {
+          "type": "textarea",
+          "id": "agree_btn_text",
+          "label": "Check terms and conditions Agree Text",
+          "default": "I agree with the terms and conditions"		
+      	},
+		{
+			"type": "text",
+			"id": "checkout_button_title",
+			"label": "Checkout Button Title",
+			"default": "Proceed to Checkout"
+		},
+        {
+          "type": "color",
+          "id": "checkbout_btn_color",
+          "label": "Checkout Button Color",
+          "default": "#d3122a"
+        },
+		{
+          "type": "color",
+          "id": "checkout_button_text_color",
+          "label": "Checkout Button Text Color",
+          "default": "#fff"
+        },
+		{
+			"type": "header",
+			"content": "Cart Empty"
+		},
+		{
+          "type": "image_picker",
+          "id": "empty_cart_img",
+          "label": "Empty Cart Image",
+          "info": "Recommended Size: 250 x 250 px"
+        },
+		{
+			"type": "text",
+			"id": "shopping_cart_title",
+			"label": "Shopping Cart Title",
+			"default": "Shopping Cart is Empty."
+		},
+		{
+			"type": "text",
+			"id": "cart_empty_title",
+			"label": "Cart Empty Title ",
+			"default": "You have no items in your shopping cart."
+		},
+		{
+			"type": "text",
+			"id": "cart_continue_title",
+			"label": "Continue Browsing Title",
+			"default": "Continue Shopping"
+		},
+		{
+			"type": "header",
+			"content": "Product Free Shippig Limit"
+		},
+		{
+			"type": "text",
+			"id": "product_free_shipping",
+			"label": "Add Product Free Shippig Limit"
+		}
+	],
+	"blocks": [
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 130
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 130
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 90
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 90
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 70
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 70
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+		   "type": "section_upsell",
+		   "name": "Cart Upsell",
+			"settings": [{
+				"type": "product",
+				"id": "upsellproduct",
+				"label": "Add Upsell products"
+			}]
+	   }
+	
+	]
+  }
+{% endschema %}

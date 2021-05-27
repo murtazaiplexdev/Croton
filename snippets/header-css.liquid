@@ -1,0 +1,31 @@
+<!-- Link all your CSS files below -->
+{{ 'plugins.css' | asset_url | stylesheet_tag }}
+
+{% if content_for_layout contains 'popup-video' %}
+{{ 'magnific.min.css' | asset_url | stylesheet_tag }}
+{% endif %}
+
+{% if content_for_layout contains 'lezada-slick-slider' or content_for_layout contains 'shop-product__small-image-gallery-slider--vertical' or content_for_layout  contains 'slick-carousel-js' or content_for_layout contains 'related_product_slide' %} 
+{{ 'slick.min.css' | asset_url | stylesheet_tag }}
+{% endif %}
+{% if content_for_layout contains 'nice-select' %}
+{{ 'nice-select.min.css' | asset_url | stylesheet_tag }}
+{% endif %}
+
+{% if content_for_layout contains 'pick_delivery_date' %}
+{{ '//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css' | stylesheet_tag }}
+{% endif %}
+
+{% if content_for_layout contains 'revolution-js' %}
+{{ 'revolution-slider.css' | asset_url | stylesheet_tag }}
+{% elsif template == 'index' and settings.body_top_slider == true %}
+{{ 'revolution-slider.css' | asset_url | stylesheet_tag }} 
+{% endif %}
+{{ 'style.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+{{ 'theme-custom.css' | asset_url | stylesheet_tag }}
+{%- endcomment -%}
+{%- if settings.custom_css != '' -%}
+{{ settings.custom_css }}
+{%- endif -%}

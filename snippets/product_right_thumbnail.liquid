@@ -1,0 +1,25 @@
+<div class="product__sticky_content product__slide_wrapper mb-sm-50">
+    <div class="row product-gallery-sticky vertical__slider">
+      <div class="col-md-3 order-2 order-sm-1">
+        <div class="product_media_nav left_vertical_slide" data-rows="4" data-vertical="true">
+          {%- for media in product.media -%}
+          {%- include 'media_nav' -%}
+          {%- endfor -%}
+        </div>
+      </div>
+      <div class="col-md-9 order-1 order-sm-1">
+        <div class="shop-product__big-image-gallery-wrapper">
+          <div class="single-product__floating-badges single-product__floating-badges--shop-product">
+            {%- include 'product-badge' -%}
+          </div>
+
+          <div class="product_media_gallery">
+            {%- for media in product.media -%}
+            {%- include 'media' -%}
+            {%- endfor -%}
+          </div>
+        </div>
+        <!--=======  End of shop product big image gallery  =======-->
+      </div>
+    </div>
+</div>

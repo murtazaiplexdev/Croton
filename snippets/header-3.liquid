@@ -1,0 +1,218 @@
+<header data-section="HeaderSection" id="section-{{ section.id }}" class="header header-box-topbar essen_tial {% if section.settings.header_sticky_enable %}header-sticky {% endif %}">
+  <!--=======  header bottom  =======-->
+  <div class="header-bottom pt-30 pt-md-20 pb-md-20 pt-sm-20  pb-sm-20">
+    <div class="container">
+
+      <!--=======  header bottom container  =======-->
+
+      <div class="header-bottom-container {% unless settings.currency_enable %} no_currency {% endunless %}">
+
+        <!--=======  language and currency change  =======-->
+
+        {% if settings.currency_enable or section.settings.gtranslate_enable %}
+        <div class="language-currency-change-container">
+
+          {%- if settings.currency_enable -%}
+          <div class="currency-change change-dropdown">
+            {% include 'currency-picker' %}
+          </div>
+          {%- endif -%}
+		  {%- if section.settings.gtranslate_enable -%} 
+          <span class="header-separator d-none d-sm-block">|</span>
+          {%- endif -%}
+
+          {%- if section.settings.gtranslate_enable -%}
+          {%- include 'gtranslate' -%}
+          {%- endif -%}
+        </div>
+        {% endif %}
+
+        
+        
+
+        <!--=======  End of language and currency change  =======-->
+
+        <!--=======  logo with off canvas  =======-->
+
+        <div class="logo-with-offcanvas">
+          <!--=======  logo   =======-->
+
+         {% if template.name == "index" or template.name == "collection" %}
+            <div class="logo">
+              {% include 'header-logo' %}
+            </div> 
+
+            {% else %}
+
+            <div class="logo">
+              <a href="/" class="theme-logo">
+                <img src="{{ section.settings.white_header_logo | img_url: 'master' }}" alt="CROTON GROUP">
+              </a>
+            </div>
+
+          {% endif %}
+
+          
+
+          <!--=======  End of logo   =======-->
+        </div>
+        
+        <!--=======  End of header bottom navigation  =======-->
+        {% if section.settings.header_right_info %}
+        <div class="header-right-container">
+          <div class="header-right-icons d-flex justify-content-end align-items-center h-100">
+            <!--=======  single-icon  =======-->
+
+            {% if section.settings.search_bar_enable %}
+            <div class="single-icon search">
+              <div id="header-search-wrap">
+                <form action="/search" method="get" class="input-group search-bar" role="search">
+                    <input type="hidden" name="type" value="product">
+                    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search Model" aria-label="{{ 'general.search.placeholder' | t }}">
+                    <button type="submit">
+                        <i class="ion-ios-search-strong"></i>
+                    </button>
+                </form>
+              </div>
+              <div class="search-btn-wrap">
+                <a href="javascript:void(0)" id="custom-search-icon" class="mobile-search-btn">
+                  <i class="ion-ios-search-strong"></i>
+                </a>
+                <div id="search-closs-btn">
+                    <span class="v-bar"></span>
+                    <span class="h-bar"></span>
+                </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if section.settings.account_icon %}
+            <div class="single-icon user-login">
+              {% if customer and shop.customer_accounts_enabled %}
+              <a href="/account">
+               <i class="ion-person-add"></i>
+              </a>
+              {% else %}
+               <a href="/account/login">
+                 <i class="ion-android-person"></i>
+              </a>
+             {% endif %}
+            </div>
+            {% endif %}
+
+            <!--=======  End of single-icon  =======-->
+            <!--=======  single-icon  =======-->
+
+            {% if section.settings.wishlist_enable %}
+            <div class="single-icon wishlist">
+              <a href="/pages/wishlist" id="offcanvas-wishlist-icon">
+                <i class="ion-android-favorite-outline"></i>
+              </a>
+            </div>
+            {% endif %}
+
+            <!--=======  End of single-icon  =======-->
+            <!--=======  single-icon  =======-->
+            
+            {% if section.settings.mini_cart_enable %}
+            <div class="single-icon cart">
+              {%- assign item_count = cart.item_count -%}
+              <a href="javascript:void(0)" id="offcanvas-cart-icon">
+                <i class="ion-ios-cart"></i>
+                <span class="count bigcounter">{{ item_count }}</span>
+              </a>
+            </div>
+            {% endif %}
+            <!--=======  End of single-icon  =======-->
+          </div>
+          <!--=======  End of header right icons  =======-->
+
+        </div>
+        {% endif %}
+        
+
+        <!--=======  End of headeer right container  =======-->
+
+        <!--=======  header bottom navigation  =======-->
+
+        <div class="header-bottom-navigation">
+          <div class="site-main-nav d-none d-lg-block">
+            <nav class="site-nav center-menu">
+              {% include 'main-menu' %}
+            </nav>
+          </div>
+        </div>
+
+        <!--=======  End of header bottom navigation  =======-->
+
+      </div>
+
+      <!--=======  End of header bottom container  =======-->
+
+      <!-- Mobile Navigation Start Here -->
+
+      <div class="site-mobile-navigation d-block d-lg-none">
+        {%- if section.settings.mobile_menu == "default" -%}
+        <div id="dl-menu" class="dl-menuwrapper site-mobile-nav">
+          <!--Site Mobile Menu Toggle Start-->
+          <button class="dl-trigger hamburger hamburger--spin">
+            <span class="hamburger-box">
+              <span class="hamburger-inner"></span>
+            </span>
+          </button><!--Site Mobile Menu Toggle End-->
+          {% include 'mobile_nav' %}
+        </div>
+        {%- elsif section.settings.mobile_menu == "offcanvas" -%}
+        <div class="mobile-navigation-icon" id="mobile-menu-trigger">
+          <i></i>
+        </div>
+        {%- include 'offcanvas_menu' -%}
+        {%- endif -%}
+      </div>
+
+      <!-- Mobile Navigation End Here -->
+
+    </div>
+  </div>
+
+ {% if section.settings.bar_show %}
+   <a style="display: block" href="{{ section.settings.link_url }}">
+      <div class="header-bottom-bar">
+      <div class="header-bar-right" style="background-image: url({{ section.settings.header_bar_img | img_url : 'master' }})">
+          <span class="{% if section.settings.link_url == '/collections/cx2-mens-stainless' %}cx2-header-right{% endif %}">{{ section.settings.right_text }}</span>
+        </div>
+        <div class="header-bar-left">{{ section.settings.left_text }}</div>
+        <div class="header-bar-right1">
+          <img src="{{ section.settings.nabver_img_left | img_url : 'master' }}" />
+        </div>
+      </div> 
+    </a>
+
+
+    <style>
+    .header-bottom-bar .header-bar-right {
+        background: url('https://cdn.shopify.com/s/files/1/1241/3290/files/banner-image_9ff84600-286e-46a0-9310-3adbc2b6f604.png');
+        background-size: cover;
+    }
+    .bell { color: #FF7A00 !important; }
+    </style>
+  {% endif %}
+
+  <!--=======  End of header bottom  =======-->
+</header>
+
+<script>
+  $(document).ready(function(){
+    $("#custom-search-icon").click(function(){
+      $("#custom-search-icon").hide();
+      $("#header-search-wrap").slideDown();
+      $("#search-closs-btn").show();
+    })
+    $("#search-closs-btn").click(function(){
+      $("#search-closs-btn").hide();
+      $("#header-search-wrap").slideUp();
+      $("#custom-search-icon").show();
+    })
+  });
+</script>
+

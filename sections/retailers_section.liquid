@@ -1,0 +1,44 @@
+<div class="retailers-logo-wrap">
+    <div class="retailers-container">
+        <h2>{{ section.settings.title }}</h2>
+        <div class="retailers-row">
+            {% for block in section.blocks %}
+                <div class="retailer-logo">
+                    <img src="{{ block.settings.retailer_logo | img_url: 'master' }}">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "Retailers Section",
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Section Title"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "logo",
+                "name": "logo",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "retailer_logo",
+                        "label": "Retailer Logo"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+            "name": "Retailers Section",
+            "category": "Retailers Section"
+            }
+	    ]
+    }
+{% endschema %}

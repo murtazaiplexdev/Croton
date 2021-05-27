@@ -1,0 +1,44 @@
+{% case media.media_type %}
+{% when 'image' %}
+<div class="thumb filter-{{ image.alt | handle }}">
+  <a data-image="{{ media | img_url: 'original' }}" class="fancybox {% if section.settings.product_zoom_enable %}product-zoom{% endif %}" rel="gallery1" href="{{ media | img_url: 'original' }}" {% if section.settings.product_popup_enable %}data-fancybox="images"{% endif %}>
+    <img id="product-featured-image-{{media.id}}" src="{{ media | img_url: 'original' }}" alt="{{ media.alt | escape }}"
+         class="lazyload product_variant_image"
+         data-src="{{ media | img_url: 'original' }}">
+  </a>
+</div>
+
+{% when 'external_video' %}
+<div class="thumb filter-{{ media.alt | handle }}">
+  <div class="product-single__media" data-media-id="{{ media.id }}" style="padding-top: 130%">
+    {{ media | external_video_tag }}
+  </div>
+</div>
+{% when 'video' %}
+<div class="thumb">
+  <div class="product-single__media" data-media-id="{{ media.id }}">
+    {{ media | video_tag: controls: true }}
+  </div>
+</div>
+
+{% when 'model' %}
+<div class="thumb">
+  <div class="product-single__media model-viewer-click" data-media-id="{{ media.id }}" style="padding-top: 100%"> 
+    {{ media | model_viewer_tag: image_size: '500x', 
+                                reveal: 'interaction', 
+    toggleable: true, 
+    data-model-id: media.id, 
+    auto-rotate: true,
+    id: 'paused-change-demo'
+    }}
+  </div>
+  
+</div>
+
+{% else %}
+<div class="thumb filter-{{ media.alt | handle }}">
+  <div class="product-single__media" data-media-id="{{ media.id }}">
+    {{ media | media_tag }}
+  </div>
+</div>
+{% endcase %}

@@ -1,0 +1,443 @@
+
+/* Jonathan Snook - MIT License - https://github.com/snookca/prepareTransition */
+(function(a){a.fn.prepareTransition=function(){return this.each(function(){var b=a(this);b.one("TransitionEnd webkitTransitionEnd transitionend oTransitionEnd",function(){b.removeClass("is-transitioning")});var c=["transition-duration","-moz-transition-duration","-webkit-transition-duration","-o-transition-duration"];var d=0;a.each(c,function(a,c){d=parseFloat(b.css(c))||d});if(d!=0){b.addClass("is-transitioning");b[0].offsetWidth}})}})(jQuery);
+
+/* replaceUrlParam - http://stackoverflow.com/questions/7171099/how-to-replace-url-parameter-with-javascript-jquery */
+function replaceUrlParam(e,r,a){var n=new RegExp("("+r+"=).*?(&|$)"),c=e;return c=e.search(n)>=0?e.replace(n,"$1"+a+"$2"):c+(c.indexOf("?")>0?"&":"?")+r+"="+a};
+
+/*============================================================================
+  Money Format
+  - Shopify.format money is defined in option_selection.js.
+    If that file is not included, it is redefined here.
+==============================================================================*/
+if ((typeof Shopify) === 'undefined') { Shopify = {}; }
+if (!Shopify.formatMoney) {
+  Shopify.formatMoney = function(cents, format) {
+    var value = '',
+        placeholderRegex = /\{\{\s*(\w+)\s*\}\}/,
+        formatString = (format || this.money_format);
+
+    if (typeof cents == 'string') {
+      cents = cents.replace('.','');
+    }
+
+    function defaultOption(opt, def) {
+      return (typeof opt == 'undefined' ? def : opt);
+    }
+
+    function formatWithDelimiters(number, precision, thousands, decimal) {
+      precision = defaultOption(precision, 2);
+      thousands = defaultOption(thousands, ',');
+      decimal   = defaultOption(decimal, '.');
+
+      if (isNaN(number) || number == null) {
+        return 0;
+      }
+
+      number = (number/100.0).toFixed(precision);
+
+      var parts   = number.split('.'),
+          dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands),
+          cents   = parts[1] ? (decimal + parts[1]) : '';
+
+      return dollars + cents;
+    }
+
+    switch(formatString.match(placeholderRegex)[1]) {
+      case 'amount':
+        value = formatWithDelimiters(cents, 2);
+        break;
+      case 'amount_no_decimals':
+        value = formatWithDelimiters(cents, 0);
+        break;
+      case 'amount_with_comma_separator':
+        value = formatWithDelimiters(cents, 2, '.', ',');
+        break;
+      case 'amount_no_decimals_with_comma_separator':
+        value = formatWithDelimiters(cents, 0, '.', ',');
+        break;
+    }
+
+    return formatString.replace(placeholderRegex, value);
+  };
+}
+
+// Timber functions
+window.timber = window.timber || {};
+
+timber.cacheSelectors = function () {
+  timber.cache = {
+    // General
+    $html                    : $('html'),
+    $body                    : $(document.body),
+
+    // Navigation
+    $navigation              : $('#AccessibleNav'),
+    $mobileSubNavToggle      : $('.mobile-nav__toggle'),
+
+    // Collection Pages
+    $changeView              : $('.change-view'),
+
+    // Product Page
+    $productImage            : $("img[id|='product-featured-image']"),
+    $thumbImages             : $('#ProductThumbs').find('a.product-single__thumbnail'),
+
+    // Customer Pages
+    $recoverPasswordLink     : $('#RecoverPassword'),
+    $hideRecoverPasswordLink : $('#HideRecoverPasswordLink'),
+    $recoverPasswordForm     : $('#RecoverPasswordForm'),
+    $customerLoginForm       : $('#CustomerLoginForm'),
+    $passwordResetSuccess    : $('#ResetSuccess')
+  };
+};
+
+timber.init = function () {
+  FastClick.attach(document.body);
+  timber.cacheSelectors();
+  timber.accessibleNav();
+  timber.mobileNavToggle();
+  timber.productImageSwitch();
+  timber.responsiveVideos();
+  timber.collectionViews();
+  timber.loginForms();
+};
+
+timber.accessibleNav = function () {
+  var $nav = timber.cache.$navigation,
+      $allLinks = $nav.find('a'),
+      $topLevel = $nav.children('li').find('a'),
+      $parents = $nav.find('.site-nav--has-dropdown'),
+      $subMenuLinks = $nav.find('.site-nav__dropdown').find('a'),
+      activeClass = 'nav-hover',
+      focusClass = 'nav-focus';
+
+  // Mouseenter
+  $parents.on('mouseenter touchstart', function(evt) {
+    var $el = $(this);
+
+    if (!$el.hasClass(activeClass)) {
+      evt.preventDefault();
+    }
+
+    showDropdown($el);
+  });
+
+  // Mouseout
+  $parents.on('mouseleave', function() {
+    hideDropdown($(this));
+  });
+
+  $subMenuLinks.on('touchstart', function(evt) {
+    // Prevent touchstart on body from firing instead of link
+    evt.stopImmediatePropagation();
+  });
+
+  $allLinks.focus(function() {
+    handleFocus($(this));
+  });
+
+  $allLinks.blur(function() {
+    removeFocus($topLevel);
+  });
+
+  // accessibleNav private methods
+  function handleFocus ($el) {
+    var $subMenu = $el.next('ul'),
+        hasSubMenu = $subMenu.hasClass('sub-nav') ? true : false,
+        isSubItem = $('.site-nav__dropdown').has($el).length,
+        $newFocus = null;
+
+    // Add focus class for top level items, or keep menu shown
+    if (!isSubItem) {
+      removeFocus($topLevel);
+      addFocus($el);
+    } else {
+      $newFocus = $el.closest('.site-nav--has-dropdown').find('a');
+      addFocus($newFocus);
+    }
+  }
+
+  function showDropdown ($el) {
+    $el.addClass(activeClass);
+
+    setTimeout(function() {
+      timber.cache.$body.on('touchstart', function() {
+        hideDropdown($el);
+      });
+    }, 250);
+  }
+
+  function hideDropdown ($el) {
+    $el.removeClass(activeClass);
+    timber.cache.$body.off('touchstart');
+  }
+
+  function addFocus ($el) {
+    $el.addClass(focusClass);
+  }
+
+  function removeFocus ($el) {
+    $el.removeClass(focusClass);
+  }
+};
+
+timber.mobileNavToggle = function () {
+  timber.cache.$mobileSubNavToggle.on('click', function() {
+    $(this).parent().toggleClass('mobile-nav--expanded');
+  });
+};
+
+timber.getHash = function () {
+  return window.location.hash;
+};
+
+timber.productPage = function (options) {
+  var moneyFormat = options.money_format,
+      variant = options.variant,
+      selector = options.selector;
+
+  // Selectors
+  var $productImage = $("img[id|='product-featured-image']"),
+      $addToCart = $('#AddToCart'),
+      $productPrice = $('#ProductPrice'),
+      $comparePrice = $('#ComparePrice'),
+      $quantityElements = $('.quantity-selector, label + .js-qty'),
+      $addToCartText = $('#AddToCartText');
+
+  if (variant) {
+
+    // Update variant image, if one is set
+    if (variant.featured_image) {
+      var newImg = variant.featured_image,
+          el = $productImage[0];
+      Shopify.Image.switchImage(newImg, el, timber.switchImage);
+    }
+
+    // Select a valid variant if available
+    if (variant.available) {
+      // Available, enable the submit button, change text, show quantity elements
+      $addToCart.removeClass('disabled').prop('disabled', false);
+      $addToCartText.html({{ settings.cart_button_title | json }});
+      $quantityElements.show();
+    } else {
+      // Sold out, disable the submit button, change text, hide quantity elements
+      $addToCart.addClass('disabled').prop('disabled', true);
+      $addToCartText.html({{ settings.soldout_button_title | json }});
+      $quantityElements.hide();
+    }
+
+    // Regardless of stock, update the product price
+    $productPrice.html( Shopify.formatMoney(variant.price, moneyFormat) );
+
+    // Also update and show the product's compare price if necessary
+    if (variant.compare_at_price > variant.price) {
+      $comparePrice
+        .html({{ 'products.product.compare_at' | t | json }} + ' ' + Shopify.formatMoney(variant.compare_at_price, moneyFormat))
+        .show();
+    } else {
+      $comparePrice.hide();
+    }
+
+  } else {
+    // The variant doesn't exist, disable submit button.
+    // This may be an error or notice that a specific variant is not available.
+    // To only show available variants, implement linked product options:
+    //   - http://docs.shopify.com/manual/configuration/store-customization/advanced-navigation/linked-product-options
+    $addToCart.addClass('disabled').prop('disabled', true);
+    $addToCartText.html({{ 'products.product.unavailable' | t | json }});
+    $quantityElements.hide();
+  }
+};
+
+timber.productImageSwitch = function () {
+  if (timber.cache.$thumbImages.length) {
+    // Switch the main image with one of the thumbnails
+    // Note: this does not change the variant selected, just the image
+    timber.cache.$thumbImages.on('click', function(evt) {
+      evt.preventDefault();
+      var newImage = $(this).attr('href');
+      timber.switchImage(newImage, null, timber.cache.$productImage);
+    });
+  }
+};
+
+timber.switchImage = function (src, imgObject, el) {
+  // Make sure element is a jquery object
+  var $el = $(el);
+  $el.attr('src', src);
+};
+
+timber.responsiveVideos = function () {
+  var $iframeVideo = $('iframe[src*="youtube.com/embed"], iframe[src*="player.vimeo"]');
+  var $iframeReset = $iframeVideo.add('iframe#admin_bar_iframe');
+
+  $iframeVideo.each(function () {
+    // Add wrapper to make video responsive
+    $(this).wrap('<div class="video-wrapper"></div>');
+  });
+
+  $iframeReset.each(function () {
+    // Re-set the src attribute on each iframe after page load
+    // for Chrome's "incorrect iFrame content on 'back'" bug.
+    // https://code.google.com/p/chromium/issues/detail?id=395791
+    // Need to specifically target video and admin bar
+    this.src = this.src;
+  });
+};
+
+timber.collectionViews = function () {
+  if (timber.cache.$changeView.length) {
+    timber.cache.$changeView.on('click', function() {
+      var view = $(this).data('view'),
+          url = document.URL,
+          hasParams = url.indexOf('?') > -1;
+
+      if (hasParams) {
+        window.location = replaceUrlParam(url, 'view', view);
+      } else {
+        window.location = url + '?view=' + view;
+      }
+    });
+  }
+};
+
+timber.loginForms = function() {
+  function showRecoverPasswordForm() {
+    timber.cache.$recoverPasswordForm.show();
+    timber.cache.$customerLoginForm.hide();
+  }
+
+  function hideRecoverPasswordForm() {
+    timber.cache.$recoverPasswordForm.hide();
+    timber.cache.$customerLoginForm.show();
+  }
+
+  timber.cache.$recoverPasswordLink.on('click', function(evt) {
+    evt.preventDefault();
+    showRecoverPasswordForm();
+  });
+
+  timber.cache.$hideRecoverPasswordLink.on('click', function(evt) {
+    evt.preventDefault();
+    hideRecoverPasswordForm();
+  });
+
+  // Allow deep linking to recover password form
+  if (timber.getHash() == '#recover') {
+    showRecoverPasswordForm();
+  }
+};
+
+timber.resetPasswordSuccess = function() {
+  timber.cache.$passwordResetSuccess.show();
+};
+
+
+// Initialize Timber's JS on docready
+$(timber.init);
+
+
+{%- if settings.wishlist_enable -%}
+(function (Wishlist, $) {
+
+  var $wishlistButton = $('.wishlist-btn');
+  var $wishlistTile = $('.wishlist-tile-container');
+  var numProductTiles = $wishlistTile.length;
+  var wishlist = localStorage.getItem('user_wishlist') || [];
+  if (wishlist.length > 0) {
+    wishlist = JSON.parse(localStorage.getItem('user_wishlist'));
+  }
+
+  /*
+   * Update button to show current state (gold for active)
+   */   
+  var animateWishlist = function (self) {
+    $(self).toggleClass('is-active');
+  };
+
+  /*
+   * Add/Remove selected item to the user's wishlist array in localStorage
+   * Wishlist button class 'is-active' determines whether or not to add or remove
+   * If 'is-active', remove the item, otherwise add it
+   */   
+  var updateWishlist = function (self) {
+    var productHandle = $(self).attr('data-product-handle');
+    var isRemove = $(self).hasClass('is-active');
+    /* Remove */
+    if (isRemove) {
+      var removeIndex = wishlist.indexOf(productHandle);
+      wishlist.splice(removeIndex, 1);
+      localStorage.setItem('user_wishlist', JSON.stringify(wishlist));
+    }
+    /* Add */ 
+    else {
+      wishlist.push(productHandle);
+      localStorage.setItem('user_wishlist', JSON.stringify(wishlist));
+    }
+    console.log(JSON.stringify(wishlist));
+  };
+
+  /*
+   * Loop through wishlist buttons and activate any items that are already in user's wishlist
+   * Activate by adding class 'is-active'
+   * Run on initialization
+   */   
+  var activateItemsInWishlist = function () {
+    $wishlistButton.each(function () {
+      var productHandle = $(this).attr('data-product-handle');
+      if (wishlist.indexOf(productHandle) > -1) {
+        $(this).addClass('is-active');
+      }
+    });
+  };
+
+  /*
+   * Loop through product titles and remove any that aren't a part of the wishlist
+   * Decrement numProductTiles on removal
+   */   
+  var displayOnlyWishlistItems = function () {
+    $wishlistTile.each(function () {
+      var productHandle = $(this).attr('data-product-handle');
+      if (wishlist.indexOf(productHandle) === -1) {
+        $(this).remove();
+        numProductTiles--;
+      }
+    });
+  };
+
+  /*
+   * Check if on the wishlist page and hide any items that aren't a part of the wishlist
+   * If no wishlist items exist, show the empty wishlist notice
+   */   
+  var loadWishlist = function () {
+    if (window.location.href.indexOf('pages/wishlist') > -1) {
+      displayOnlyWishlistItems();
+      $('.wishlist-loader').fadeOut(2000, function () {
+        $('.wishlist-grid').addClass('is_visible');
+        $('.wishlist-hero').addClass('is_visible');
+        if (numProductTiles == 0) {
+          $('.wishlist-grid--empty-list').addClass('is_visible');
+        } else {
+          $('.wishlist-grid--empty-list').hide();
+        }
+      });
+    }
+  };
+
+  var bindUIActions = function () {
+    $wishlistButton.click(function (e) {
+      e.preventDefault();
+      updateWishlist(this);
+      animateWishlist(this);
+    });
+  };
+
+  Wishlist.init = function () {
+    bindUIActions();
+    activateItemsInWishlist();
+    loadWishlist();
+  };
+
+}(window.Wishlist = window.Wishlist || {}, jQuery, undefined));
+
+{%- endif -%}

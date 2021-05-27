@@ -1,0 +1,94 @@
+<div class="faq-wrap">
+    <h1>{{ section.settings.title }}</h1>
+    <div class="faq-content">
+
+        <div id="faq-accordion" class="accordion-container">
+            {% for block in section.blocks %}
+                    <div class="faq-row {% if block.settings.open %} open {% endif %}" >
+                        <h4 class="question"><i></i>{{ block.settings.question }} 
+                            <span class="faq-icon">
+                                <span class="v-bar"></span>
+                                <span class="h-bar"></span>
+                            </span>
+                        </h4>
+                        <div class="answer" style="{% if block.settings.open %} display: block {% endif %}">
+                            <p>{{ block.settings.answer }} </p>
+                        </div>
+                    </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+
+
+{% schema %}
+    {
+        "name": "FAQ Page",
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "default": "Frequently Asked Question"
+            }
+        ],
+        "blocks": [
+            {
+                "name": "FAQ Section",
+                "type": "faq_",
+                "settings": [
+                    {
+                        "type": "checkbox",
+                        "id": "open",
+                        "label": "Open Tab"
+                    },
+                    {
+                        "type": "text",
+                        "id": "question",
+                        "label": "Question"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "answer",
+                        "label": "Question"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}
+
+
+<script>
+$(function() {
+    var Accordion = function(el, multiple) {
+            this.el = el || {};
+            this.multiple = multiple || false;
+
+            var links = this.el.find('.question');
+            links.on('click', {
+                    el: this.el,
+                    multiple: this.multiple
+            }, this.dropdown)
+    }
+
+    Accordion.prototype.dropdown = function(e) {
+            var $el = e.data.el;
+            $this = $(this),
+                    $next = $this.next();
+
+            $next.slideToggle();
+            $this.parent().toggleClass('open');
+
+            if (!e.data.multiple) {
+                    $el.find('.answer').not($next).slideUp().parent().removeClass('open');
+            };
+    }
+    var accordion = new Accordion($('.accordion-container'), false);
+});
+
+
+</script>
+
+

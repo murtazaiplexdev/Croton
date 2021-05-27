@@ -1,0 +1,140 @@
+{% unless section.settings.latest_banner %}
+  <div class="thanks-banner" style="background-image: url('{{ section.settings.bg_img | img_url: 'master'}}')">
+    <div class="banner-inner">
+         {% if section.settings.main_title != blank %}
+        <h4>{{ section.settings.main_title }}</h4>
+        {% endif %}
+        {% if section.settings.sub_title != blank %}
+            <h2>{{ section.settings.sub_title }}</h2>
+        {% endif %}
+        {% if section.settings.discount_text != blank %}
+            <h1>{{ section.settings.discount_text }}</h1>
+        {% endif %}
+        {% if section.settings.main_text != blank %}
+            <p>{{ section.settings.main_text }}</p>
+        {% endif %}
+        {% if section.settings.sub_text != blank %}
+            <p class="sm-text">{{ section.settings.sub_text }}</p>
+        {% endif %}
+        {% if section.settings.btn_text != blank %}
+        <a href="{{ section.settings.btn_url }}" class="custom-btn">{{ section.settings.btn_text }}</a>
+        {% endif %}
+    </div>
+  </div>
+{% endunless %}
+{% if section.settings.latest_banner %}
+  <div class="thanks-banner home_banner_wrap" style="background-image: url('{{ section.settings.bg_img | img_url: 'master'}}')">
+    <div class="banner-inner">
+         {% if section.settings.main_title != blank %}
+          <h4 style="color: {{ section.settings.main_title_color }}">{{ section.settings.main_title }}</h4>
+        {% endif %}
+        {% if section.settings.sub_title != blank %}
+            <p style="color: {{ section.settings.sub_title_color }}">{{ section.settings.sub_title }}</p>
+        {% endif %}
+        {% if section.settings.discount_text != blank %}
+            <h1 style="color: {{ section.settings.discount_text_color }}">{{ section.settings.discount_text }}</h1>
+        {% endif %}
+        {% if section.settings.main_text != blank %}
+            <h2 style="-webkit-text-stroke-color: {{ section.settings.main_text_color }}">{{ section.settings.main_text }}</h2>
+        {% endif %}
+        {% if section.settings.sub_text != blank %}
+            <p class="sm-text">{{ section.settings.sub_text }}</p>
+        {% endif %}
+        {% if section.settings.btn_text != blank %}
+          <a href="{{ section.settings.btn_url }}" class="custom-btn">{{ section.settings.btn_text }}</a>
+        {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+
+{% schema %}
+  {
+    "name": "Home Banner",
+    "settings": [
+            {
+              "type": "header",
+              "content": "Content",
+              "info": "--------------"
+            },
+            {
+              "type": "checkbox",
+              "id": "latest_banner",
+              "label": "Latest Banner",
+              "default": false
+            },
+            {
+              "type": "image_picker",
+              "id": "bg_img",
+              "label": "Background Image"
+            },
+            {
+              "type": "text",
+              "id": "main_title",
+              "label": "Main Title",
+              "default": ">SHOP OUR BIGGEST SALE EVER"
+            },
+            {
+              "type": "color",
+              "id": "main_title_color",
+              "label": "Main Title Color"
+            },
+            {
+              "type": "text",
+              "id": "sub_title",
+              "label": "Sub Title",
+              "default": "GIVE THANKS & BUY BIG"
+            },
+            {
+              "type": "color",
+              "id": "sub_title_color",
+              "label": "Sub Title Color"
+            },
+            {
+              "type": "text",
+              "id": "discount_text",
+              "label": "Discount Text",
+              "default": "85% off"
+            },
+            {
+              "type": "color",
+              "id": "discount_text_color",
+              "label": "Discount Text Color"
+            },
+            {
+              "type": "text",
+              "id": "main_text",
+              "label": "Main Text",
+              "default": "on our bestsellers starting today!"
+            },
+            {
+              "type": "color",
+              "id": "main_text_color",
+              "label": "Main Text Color"
+            },
+            {
+              "type": "text",
+              "id": "sub_text",
+              "label": "Sub Text",
+              "default": "It’s never too early to get into the holiday spirit"
+            },
+            {
+              "type": "url",
+              "id": "btn_url",
+              "label": "Button Url"
+            },
+            {
+              "type": "text",
+              "id": "btn_text",
+              "label": "Button Text",
+              "default": "SHOP NOW"
+            }
+	],
+	"presets": [
+		{
+		  "name": "Home Banner",
+		  "category": "4. Banner"
+		}
+	]
+  }
+{% endschema %}

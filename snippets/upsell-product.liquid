@@ -1,0 +1,75 @@
+
+{% comment %}{% for block in section.blocks %}
+    {% if block.type == "section_upsell" %}
+        {% assign upsell_prod = all_products[block.settings.upsellproduct] %}
+        <div class="upsell-products col-12 col-lg-3 col-md-6 col-sm-6 mb-45" id="upsell-products">
+            <div>
+                {{ upsell_prod.featured_image | product_img_url: image_size | img_tag  }}
+            </div>
+            <div>
+                <h4>
+                    {{ upsell_prod.title }}
+                </h4>
+                <p>{{ upsell_prod.price | money }}</p>
+            </div>
+            {% assign productId = upsell_prod.variants.first.id %}
+            <form method="post" action="/cart/add">
+                <input type="hidden" name="id" value="{{ productId }}"/>
+                <input type="number" min="1" id="quantity" value="1" style="display: none;"/>
+                <input type="submit" value=" Add Product" class="cart" />
+            </form>
+        </div>
+    {% endif %} 
+{% endfor %} {% endcomment %}
+
+
+
+
+{% for block in section.blocks %}
+    {% if block.type == "section_upsell" %}
+        {% assign upsell_prod = all_products[block.settings.upsellproduct] %}
+
+              <table class="cart-table">              
+                <tbody>
+                  <tr class="alert alert-success alert-dismissible">
+
+                    <td class="product-thumbnail pro-thumbnail">
+                      <div class="product-thumbnail-wrap">
+                        <a>
+                          {{ upsell_prod.featured_image | product_img_url: image_size | img_tag  }}
+                        </a>
+                      <div>
+                    </td>
+
+                    <td class="product-name pro-name">
+                      <a>{{ upsell_prod.title }}</a>
+                    </td>
+
+
+                    <td class="product-price pro-price">
+                      <span class="price amount">
+                        {{ upsell_prod.price | money }}
+                      </span>
+                    </td>
+
+
+
+                    <td class="product-remove pro-remove">
+                      {% assign productId = upsell_prod.variants.first.id %}
+                      <form method="post" action="/cart/add">
+                        <input type="hidden" name="id" value="{{ productId }}"/>
+                        <input type="number" min="1" id="quantity" value="1" style="display: none;"/>
+                        <input type="submit" value=" Add Product" class="cart" />
+                      </form>
+                    </td>
+                    <td>
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    </td>
+
+                  </tr>
+
+                </tbody>
+
+              </table>
+    {% endif %} 
+{% endfor %} 

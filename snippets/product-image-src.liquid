@@ -1,0 +1,85 @@
+<!-- Product Image Lazyload with Retina  -->
+{%- assign prodimgsize1 = '600x800' -%}
+{%- assign prodimgsize2 = '600x600' -%}
+
+{%- capture datasrcset -%}
+{% assign imagesrc = product.featured_image %}
+{%- if settings.product_image_retina_enable -%}
+{{ imagesrc | img_url: prodimgsize1, crop: 'center' }} 320w, {{ imagesrc | img_url: prodimgsize1, crop: 'center' }} 575w, {{ imagesrc | img_url: prodimgsize1, crop: 'center' }} 767w, {{ imagesrc | img_url: prodimgsize1, crop: 'center' }} 1024w, {{ imagesrc | img_url: prodimgsize1, crop: 'center', scale: 2 }} 1440w, {{ imagesrc | img_url: prodimgsize1, crop: 'center', scale: 3 }} 1920w
+{%- else -%}
+{{ imagesrc | img_url: prodimgsize1, crop: 'center' }} 320w, {{ imagesrc | img_url: prodimgsize1, crop: 'center' }} 575w, {{ imagesrc | img_url: prodimgsize1, crop: 'center' }} 767w, {{ imagesrc | img_url: prodimgsize1, crop: 'center' }} 1024w
+{%- endif -%}
+{%- endcapture -%} 
+
+{%- capture datasrcsetsqaure -%}
+{% assign imagesrc = product.featured_image %}
+{%- if settings.product_image_retina_enable -%}
+{{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 320w, {{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 575w, {{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 767w, {{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 1024w, {{ imagesrc | img_url: prodimgsize2, crop: 'center', scale: 2 }} 1440w, {{ imagesrc | img_url: prodimgsize2, crop: 'center', scale: 3 }} 1920w
+{%- else -%}
+{{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 320w, {{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 575w, {{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 767w, {{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 1024w
+{%- endif -%}
+{%- endcapture -%} 
+
+{%- capture ajaxloader -%}
+{{ 'ajax_loader.svg' | asset_url }}
+{%- endcapture -%}
+
+{% if product.featured_image.src != blank %}
+<a class="image-wrap" href="{{ product.url | within: collection }}">
+  {% if product.images.size > 1 and settings.product_dual_thumb_enable == true %}
+  {%- if settings.product_square == 'square' -%}
+    <img class="lazyload popup_cart_image" src="{{ ajaxloader }}" alt="{{ product.featured_image.alt | escape }}" data-src="{{ product.featured_image.src | img_url: prodimgsize2, crop: 'center' }}" data-srcset="{{ datasrcsetsqaure }}">
+  {%- else -%}
+    <img class="lazyload popup_cart_image" src="{{ ajaxloader }}" alt="{{ product.featured_image.alt | escape }}" data-src="{{ product.featured_image.src | img_url: prodimgsize1, crop: 'center' }}" data-srcset="{{ datasrcset }}">
+  {%- endif -%}
+
+
+  {% for image in product.images limit: 1 offset: 1 %}
+
+  <!-- Offset Image Retina and lazyload  -->
+  
+  {%- capture datasrcsetoffset -%}
+  {% assign imagesrcoffset = image %}
+  {%- if settings.product_image_retina_enable -%}
+  
+  {{ imagesrcoffset | img_url: prodimgsize1, crop: 'center' }} 320w, {{ imagesrcoffset | img_url: prodimgsize1, crop: 'center' }} 575w, {{ imagesrcoffset | img_url: prodimgsize1, crop: 'center' }} 767w, {{ imagesrcoffset | img_url: prodimgsize1, crop: 'center' }} 1024w, {{ imagesrcoffset | img_url: prodimgsize1, crop: 'center', scale: 2 }} 1440w, {{ imagesrcoffset | img_url: prodimgsize1, crop: 'center', scale: 3 }} 1920w
+  {%- else -%}
+  {{ imagesrcoffset | img_url: prodimgsize1, crop: 'center' }} 320w, {{ imagesrcoffset | img_url: prodimgsize1, crop: 'center' }} 575w, {{ imagesrcoffset | img_url: prodimgsize1, crop: 'center' }} 767w, {{ imagesrcoffset | img_url: prodimgsize1, crop: 'center' }} 1024w
+  {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture datasrcsetoffsetsqaure -%}
+  {% assign imagesrc = image %}
+  {%- if settings.product_image_retina_enable -%}
+  {{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 320w, {{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 575w, {{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 767w, {{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 1024w, {{ imagesrc | img_url: prodimgsize2, crop: 'center', scale: 2 }} 1440w, {{ imagesrc | img_url: prodimgsize2, crop: 'center', scale: 3 }} 1920w
+  {%- else -%}
+  {{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 320w, {{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 575w, {{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 767w, {{ imagesrc | img_url: prodimgsize2, crop: 'center' }} 1024w
+  {%- endif -%}
+  {%- endcapture -%} 
+
+
+
+      {%- if settings.product_square == 'square' -%}
+        <img class="lazyload popup_cart_image" src="{{ ajaxloader }}" alt="{{ product.featured_image.alt | escape }}" data-src="{{ image.src | img_url: prodimgsize2, crop: 'center' }}" data-srcset="{{ datasrcsetoffsetsqaure }}">
+      {%- else -%}
+        <img class="lazyload popup_cart_image" src="{{ ajaxloader }}" alt="{{ product.featured_image.alt | escape }}" data-src="{{ image.src | img_url: prodimgsize1, crop: 'bottom' }}" data-srcset="{{ datasrcsetoffset }}">
+      {%- endif -%}
+
+    {%- endfor -%}
+    
+  {%- else -%}
+    {%- if settings.product_square == 'square' -%}
+      <img class="lazyload popup_cart_image" src="{{ ajaxloader }}" alt="{{ product.featured_image.alt | escape }}" data-src="{{ product.featured_image.src | img_url: prodimgsize2, crop: 'center' }}" data-srcset="{{ datasrcsetsqaure }}">
+    {%- else -%}
+      <img class="lazyload popup_cart_image" src="{{ ajaxloader }}" alt="{{ product.featured_image.alt | escape }}" data-src="{{ product.featured_image.src | img_url: prodimgsize1, crop: 'bottom' }}" data-srcset="{{ datasrcset }}">
+    {%- endif -%}
+  {%- endif -%}
+</a>
+{% else %}
+<a class="image-wrap" href="{{ product.url | within: collection }}" >
+  {% capture current %}{% cycle 1, 2, 3 %}{% endcapture %}
+  <div style="padding: 6px 0;">
+    {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+  </div>
+</a>
+{% endif %}
